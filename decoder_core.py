@@ -538,6 +538,7 @@ def decode_addresses(context, system_addrs):
                 Physical_addr=hex(address_state.system_addr),
                 Normalized_addr=hex(address_state.norm_addr),
                 CH=ch,
+                Sub_CH=subch,
                 Rank=rank % 2,
                 BankGroup=bank_info["bg"],
                 Bank=bank_info["bs"],
@@ -549,4 +550,3 @@ def decode_addresses(context, system_addrs):
 
     print(result)
     return result, excel_data
-cel_data

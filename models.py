@@ -83,5 +83,5 @@ class ProjectThresholdRule:
     total_density_thresholds: Dict[int, int]
 
 
+# LPDDR5 경로에서는 subchannel 개념이 없으므로 기본값은 None으로 둔다.
 DEFAULT_LPDDR5_SUBCHANNEL = None
-T_LPDDR5_SUBCHANNEL = None
