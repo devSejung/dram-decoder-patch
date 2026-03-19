@@ -71,3 +71,13 @@ Safety invariants:
 - row / col are resolved from `req_addr`
 
 These rules are intended to keep the refactor behavior-preserving while making future LPDDR6/subchannel work easier to add.
+
+## Repository Maintenance Notes
+
+This repository is intended to track the refactor work in a review-friendly way.
+
+- Keep changes behavior-preserving unless explicitly noted.
+- Do not edit legacy `decoder.py` during validation work.
+- Prefer small commits with clear intent.
+- If decode behavior changes, document why and compare against legacy output before merging.
+- Keep pipeline/readability changes separate from algorithm changes when possible.
