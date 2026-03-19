@@ -11,6 +11,7 @@ class ChannelConfigInfo:
     CH_Bit2Hash: str
     CH_Bit1Hash: str
     CH_Bit0Hash: str
+    SubChHashBitEn: str
     Bank3HashBitEn: str
     Bank2HashBitEn: str
     Bank1HashBitEn: str
@@ -83,3 +84,4 @@ class ProjectThresholdRule:
 
 
 DEFAULT_LPDDR5_SUBCHANNEL = None
+T_LPDDR5_SUBCHANNEL = None

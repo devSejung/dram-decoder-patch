@@ -51,16 +51,25 @@ class ExcelConfigRepository:
 
     def get_channel_config_info(self, project_code):
         row = self._df_chconfig[self._df_chconfig["Project_Code"] == project_code]
+        def get_value(column_name, default="0x0"):
+            if column_name not in row.columns:
+                return default
+            value = row[column_name].iloc[0]
+            if value in (None, "", " "):
+                return default
+            return value
+
         return ChannelConfigInfo(
             Project_Code=row["Project_Code"].iloc[0],
             Project_Name=row["Project_Name"].iloc[0],
             CHASYM=int(row["CHASYM"].iloc[0]),
             CH_num=int(row["CH_num"].iloc[0]),
-            CH_Bit2Hash=row["CH_Bit2Hash"].iloc[0],
-            CH_Bit1Hash=row["CH_Bit1Hash"].iloc[0],
-            CH_Bit0Hash=row["CH_Bit0Hash"].iloc[0],
-            Bank3HashBitEn=row["Bank3HashBitEn"].iloc[0],
-            Bank2HashBitEn=row["Bank2HashBitEn"].iloc[0],
-            Bank1HashBitEn=row["Bank1HashBitEn"].iloc[0],
-            Bank0HashBitEn=row["Bank0HashBitEn"].iloc[0],
+            CH_Bit2Hash=get_value("CH_Bit2Hash"),
+            CH_Bit1Hash=get_value("CH_Bit1Hash"),
+            CH_Bit0Hash=get_value("CH_Bit0Hash"),
+            SubChHashBitEn=get_value("SubChHashBitEn"),
+            Bank3HashBitEn=get_value("Bank3HashBitEn"),
+            Bank2HashBitEn=get_value("Bank2HashBitEn"),
+            Bank1HashBitEn=get_value("Bank1HashBitEn"),
+            Bank0HashBitEn=get_value("Bank0HashBitEn"),
         )

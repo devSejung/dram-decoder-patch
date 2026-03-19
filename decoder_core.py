@@ -110,6 +110,18 @@ def _resolve_channel(system_addr, hash_cfg, asym_region):
     return int((ch_bit2 * 4 + ch_bit1 * 2 + ch_bit0) % (hash_cfg["ch_num"] / (asym_region + 1)))
 
 
+def _resolve_subchannel(system_addr, hash_cfg):
+    """
+    LPDDR6용 subchannel resolve 단계.
+    CHConfig의 `SubChHashBitEn`가 비어 있지 않으면 LP6 프로젝트로 보고,
+    channel hash와 같은 계열의 parity 해시 방식으로 subchannel(0/1)을 계산한다.
+    값이 없으면 기존 LPDDR5 경로로 간주해 None을 반환한다.
+    """
+    if hash_cfg["subch_hash_bit_en"] == 0:
+        return None
+    return parity(system_addr & hash_cfg["subch_hash_bit_en"])
+
+
 def _select_tzconfig(registers, ch, ch_num):
     """ASYM 구성일 때 채널 위치에 따라 좌/우 TZ config(0/1)를 고른다."""
     if registers["rank_num"][1] != 0 and ch >= (ch_num / 2):
@@ -446,16 +458,17 @@ def decode_addresses(context, system_addrs):
 
     순서:
     1) resolve_channel(system_addr)
-    2) select_tzconfig(ch, asym_region)
-    3) remove_address_hole(system_addr)
-    4) resolve_interleave(hole_removed_addr)
-    5) normalize_addr(hole_removed_addr)
-    6) resolve_rank(norm_addr)
-    7) resolve_bank(norm_addr)
-    8) resolve_req_addr(norm_addr)
-    9) resolve_row(req_addr)
-    10) resolve_col(req_addr)
-    11) build_legacy_result(...)
+    2) resolve_subchannel(system_addr)        # LPDDR5 경로에서는 None
+    3) select_tzconfig(ch, asym_region)
+    4) remove_address_hole(system_addr)
+    5) resolve_interleave(hole_removed_addr)
+    6) normalize_addr(hole_removed_addr)
+    7) resolve_rank(norm_addr)
+    8) resolve_bank(norm_addr)
+    9) resolve_req_addr(norm_addr)
+    10) resolve_row(req_addr)
+    11) resolve_col(req_addr)
+    12) build_legacy_result(...)
     """
     system_addrs = remove_duplicates(system_addrs)
     excel_data = context.excel_data
@@ -535,3 +548,4 @@ def decode_addresses(context, system_addrs):
 
     print(result)
     return result, excel_data
+cel_data

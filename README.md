@@ -35,6 +35,7 @@
 
 - LPDDR5 흐름은 깨지지 않게 유지한다.
 - subchannel selection은 새 decode stage로 추가한다.
+- `CHConfig` 탭에 `SubChHashBitEn` 값이 존재하고 비어있지 않으면 LPDDR6 프로젝트로 간주한다.
 - LPDDR6 project-specific 동작은 `project_rules.py` 안에 둔다.
 - 백엔드 요구가 공식적으로 바뀌지 않는 한 legacy API shape는 유지한다.
 
