@@ -490,11 +490,12 @@ def decode_addresses(context, system_addrs):
     for system_addr_text in system_addrs:
         address_state = AddressState(system_addr=int(system_addr_text, 16))
 
-        # 1) channel / asym / tzconfig 선택은 system_addr 기준
+        # 1) channel / subchannel / asym / tzconfig 선택은 system_addr 기준
         asym_region = 0
         if registers["rank_num"][1] != 0:
             asym_region = resolve_asym_region(context.project_code, total_density, address_state.system_addr)
         ch = _resolve_channel(address_state.system_addr, hash_cfg, asym_region)
+        subch = _resolve_subchannel(address_state.system_addr, hash_cfg)
         tzconfig = _select_tzconfig(registers, ch, hash_cfg["ch_num"])
         tz = _extract_tzconfig_view(registers, tzconfig)
 
