@@ -41,6 +41,15 @@ class DecodeContext:
     project_df: object
 
 
+@dataclass(frozen=True)
+class AddressState:
+    # decode 파이프라인에서 주소가 어떻게 변형되는지 추적하기 위한 상태 구조체
+    system_addr: int
+    hole_removed_addr: int | None = None
+    norm_addr: int | None = None
+    req_addr: int | None = None
+
+
 @dataclass
 class DecodeResult:
     Physical_addr: str
